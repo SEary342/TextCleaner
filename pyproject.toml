@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "textcleaner"
+version = "0.1.0"
+description = ""
+authors = ["SEary342 <45857544+SEary342@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PySimpleGUI = "^4.34.0"
+pyperclip = "^1.8.1"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+flake8 = "^3.8.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
