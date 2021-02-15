@@ -9,12 +9,12 @@ from textcleaner.textprocess import InvalidConfig, process_text, validate_config
 def app():
     sg.theme("DarkAmber")  # Add a touch of color
     # All the stuff inside your window.
+    settings = sg.UserSettings()
     config_data = None
-    filename = ""
     layout = [
         [sg.Text("Load Configuration:")],
         [
-            sg.Input(filename, key="-IN-"),
+            sg.Input(settings.get("-filename-"), key="-IN-"),
             sg.FileBrowse(file_types=(("TextCleanerConfig", "*.tcConfig"),)),
         ],
         [sg.Button("Load", key="-load-")],
@@ -44,7 +44,7 @@ def app():
                 sg.PopupError("File cannot be found")
             else:
                 config_data = None
-                filename = ""
+                settings["-filename-"] = ""
                 window["-process-"](disabled=True)
                 window["-copy-"](disabled=True)
                 window["-OUTPUT-"].update("")
@@ -59,15 +59,17 @@ def app():
                 except ValueError:
                     sg.PopupError("Invalid file content")
                 if config_data:
-                    filename = pre_file
+                    settings["-filename-"] = pre_file
                     window["-load_status-"](
-                        f"{filename.split('/')[-1]} Loaded", text_color="green"
+                        f"{settings['-filename-'].split('/')[-1]} Loaded",
+                        text_color="green",
                     )
                     window["-process-"](disabled=False)
         elif event == "-process-":
             try:
                 window["-OUTPUT-"].update(process_text(values["-INPUT-"], config_data))
                 window["-copy-"](disabled=False)
+                pyperclip.copy(values["-OUTPUT-"])
             except InvalidConfig as e:
                 sg.PopupError(e)
         elif event == "-copy-":
