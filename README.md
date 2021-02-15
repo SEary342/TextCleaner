@@ -1,4 +1,4 @@
-# TextCleaner Readme
+# TextCleaner
 Version: `0.1.0`
 
 TextCleaner is a simple Python app that takes an input text string and alters it by removing and replacing content based on a configuration file. 
