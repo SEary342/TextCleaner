@@ -29,7 +29,9 @@ def process_text(input_text: str, conversion_config: dict) -> str:
             )
         if "replace" in conversion_config.keys():
             preprocess = _replace_text(preprocess, conversion_config["replace"])
-        return "\n".join(preprocess)
+        if "add" in conversion_config.keys():
+            preprocess = _add_lines(preprocess, tuple(set(conversion_config["add"])))
+        return "\n".join(preprocess).strip("\n")
     else:
         raise InvalidConfig(valid_config[1])
 
@@ -71,6 +73,10 @@ def validate_config(config_data: dict) -> Tuple[bool, str]:
 
 def _remove_lines(input_data: List[str], config_data: Tuple[str, ...]) -> List[str]:
     return [x for x in input_data if not x.startswith(config_data)]
+
+
+def _add_lines(input_data: List[str], config_data: Tuple[str, ...]) -> List[str]:
+    return [f"\n{x}" if x.startswith(config_data) else x for x in input_data]
 
 
 def _replace_text(input_data: List[str], config_data: Dict[str, str]) -> List[str]:
