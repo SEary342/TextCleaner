@@ -22,7 +22,10 @@ def app():
         [sg.Text("_" * 60)],
         [sg.Text("Input:")],
         [sg.Multiline("", key="-INPUT-", size=(60, 15))],
-        [sg.Button("Process", key="-process-", disabled=True)],
+        [
+            sg.Button("Process", key="-process-", disabled=True),
+            sg.Button("Clear", key="-clear-", disabled=False),
+        ],
         [sg.Text("Output:")],
         [sg.Multiline("", key="-OUTPUT-", size=(60, 15), disabled=True)],
         [sg.Button("Copy", key="-copy-", disabled=True)],
@@ -45,7 +48,7 @@ def app():
             else:
                 config_data = None
                 settings["-filename-"] = ""
-                window["-process-"](disabled=True)
+                window["-process-"](disabled=False)
                 window["-copy-"](disabled=True)
                 window["-OUTPUT-"].update("")
                 with open(pre_file, "r") as op_file:
@@ -74,6 +77,10 @@ def app():
                 sg.PopupError(e)
         elif event == "-copy-":
             pyperclip.copy(values["-OUTPUT-"])
+        elif event == "-clear-":
+            window["-OUTPUT-"].update("")
+            window["-INPUT-"].update("")
+            window["-copy-"](disabled=True)
 
     window.close()
 
