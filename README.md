@@ -1,5 +1,5 @@
 # TextCleaner
-Version: `0.1.0`
+Version: `0.1.1`
 
 TextCleaner is a simple Python app that takes an input text string and alters it by removing and replacing content based on a configuration file. 
 
@@ -35,6 +35,7 @@ The config file(s) should be formatted similarly to this:
   "replace": {
     "IncorrectIncorrect": "Incorrect",
     "CorrectCorrect": "Correct"
-  }
+  },
+  "add": ["Line 3"]
 }
 ```
